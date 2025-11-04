@@ -1,7 +1,7 @@
 resource "aws_instance" "terraform" {
     count = length(var.instance_names)
-    ami = data.aws_ami.ami_info.id
-    instance_type = var.instance_names[count.index] == "mysql" ? "t2.small" : "t2.micro"
+    ami = "ami-0733cbac1dcca0be4"
+    instance_type = "t2.micro"
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
     tags = merge(
@@ -13,8 +13,8 @@ resource "aws_instance" "terraform" {
 }
 
 resource "aws_security_group" "allow_ssh" {
-    name = "allow-ssh-prac-1"
-    description = "allow port number 22 for ssh"
+    name = "allow-ssh"
+    description = "allow ssh port number 22"
 
     egress {
         from_port = 22
@@ -29,20 +29,4 @@ resource "aws_security_group" "allow_ssh" {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
-  
-}
-
-
-# if prod create t2.small, otherwise create t2.micro
-resource "aws_instance" "elasticsearch" {
-    ami = data.aws_ami.ami_info.id
-    instance_type = local.instance_type
-    vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-
-    tags = merge(
-        var.common_tags,
-        {
-            Name = "elasticsearch"
-        }
-    )
 }
