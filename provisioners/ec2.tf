@@ -74,8 +74,7 @@ resource "aws_instance" "expense" {
     when = destroy
     inline = [ 
         "sudo systemctl stop nginx"
-     ]
-    
+    ] 
   }
 }
 
