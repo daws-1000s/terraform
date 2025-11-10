@@ -58,6 +58,7 @@ resource "aws_instance" "expense" {
     private_key = file("C:/Users/PC/Downloads/usnorthvirginia.pem")
   }
 
+# provisioners will execute while creation of instance
   # Remote commands to install & start Nginx
   provisioner "remote-exec" {
     inline = [
